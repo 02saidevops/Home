@@ -1,3 +1,2 @@
-<h1> Deploy to Container(Apache-Tomcat) using Declarative Pipeline </h1>
+<h1>Configuring Job in Jenkin Master Server and running it on Slave Machine </h1>
 
-<h1> Practice for CICD Declarative Pipeline </h1>
