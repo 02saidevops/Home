@@ -4,19 +4,20 @@ pipeline{
         maven 'Maven'
     }
     stages{
-        stage("GitHub"){
+        stage("Git"){
             steps{
                 git 'https://github.com/02saidevops/Home.git'
             }
         }
-        stage("Build-Maven"){
+        stage("Build"){
             steps{
                 sh "mvn clean install package"
             }
         }
         stage("Deploy"){
             steps{
-                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.146.141.98:8090/')], contextPath: null, war: '**/*.war'
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'Ansible', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd /etc/ansible;
+ansible-playbook dep.yml''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//etc//ansible', remoteDirectorySDF: false, removePrefix: '/webapp/target', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
     }
